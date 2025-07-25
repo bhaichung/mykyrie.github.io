@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", () => {
+window.onload = () => {
   const yesBtn = document.getElementById("yes-btn");
   const canvas = document.getElementById("fireworks");
   const ctx = canvas.getContext("2d");
@@ -54,4 +54,4 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   draw();
-});
+};
