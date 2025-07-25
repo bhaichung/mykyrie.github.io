@@ -8,7 +8,7 @@ canvas.height = window.innerHeight;
 const fireworks = [];
 
 yesBtn.addEventListener("click", () => {
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 30; i++) {
     fireworks.push(createParticle());
   }
 });
@@ -17,19 +17,19 @@ function createParticle() {
   const x = canvas.width / 2;
   const y = canvas.height / 2;
   const angle = Math.random() * 2 * Math.PI;
-  const speed = Math.random() * 4 + 2;
+  const speed = Math.random() * 5 + 2;
   return {
     x,
     y,
     vx: Math.cos(angle) * speed,
     vy: Math.sin(angle) * speed,
     alpha: 1,
-    color: `hsl(${Math.random() * 360}, 100%, 60%)`
+    color: `hsl(${Math.random() * 360}, 100%, 70%)`
   };
 }
 
 function draw() {
-  ctx.fillStyle = "rgba(255, 240, 246, 0.2)";
+  ctx.fillStyle = "rgba(255, 224, 236, 0.1)";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   for (let i = fireworks.length - 1; i >= 0; i--) {
@@ -42,7 +42,7 @@ function draw() {
 
     p.x += p.vx;
     p.y += p.vy;
-    p.alpha -= 0.02;
+    p.alpha -= 0.015;
 
     if (p.alpha <= 0) {
       fireworks.splice(i, 1);
