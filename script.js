@@ -1,59 +1,54 @@
-const container = document.getElementById("container");
-const image1 = document.querySelector(".image-1");
-const image2 = document.querySelector(".image-2");
-const btnYes = document.querySelector(".btn-yes");
-const btnNo = document.querySelector(".btn-no");
-const mydetails=document.querySelector(".mydetails")
-const Afteryes=document.querySelector(".Afteryes")
-const before_yes=document.querySelector(".before_yes")
+const yesBtn = document.getElementById("yes-btn");
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
 
-function getRandomNumber(min, max) {
-    const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-    return randomNumber;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const fireworks = [];
+
+yesBtn.addEventListener("click", () => {
+  for (let i = 0; i < 20; i++) {
+    fireworks.push(createParticle());
+  }
+});
+
+function createParticle() {
+  const x = canvas.width / 2;
+  const y = canvas.height / 2;
+  const angle = Math.random() * 2 * Math.PI;
+  const speed = Math.random() * 4 + 2;
+  return {
+    x,
+    y,
+    vx: Math.cos(angle) * speed,
+    vy: Math.sin(angle) * speed,
+    alpha: 1,
+    color: `hsl(${Math.random() * 360}, 100%, 60%)`
+  };
 }
 
-btnNo.addEventListener("mouseover", (e) => {
-    const containerHeight = container.getBoundingClientRect().height;
-    const containerWidth = container.getBoundingClientRect().width;
+function draw() {
+  ctx.fillStyle = "rgba(255, 240, 246, 0.2)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const btnHeight = btnNo.getBoundingClientRect().height;
-    const btnWidth = btnNo.getBoundingClientRect().width;
-    const btnTop = btnNo.getBoundingClientRect().top;
-    const btnLeft = btnNo.getBoundingClientRect().left;
+  for (let i = fireworks.length - 1; i >= 0; i--) {
+    const p = fireworks[i];
+    ctx.globalAlpha = p.alpha;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+    ctx.fill();
 
-    let newTop = btnTop;
-    let newLeft = btnLeft;
+    p.x += p.vx;
+    p.y += p.vy;
+    p.alpha -= 0.02;
 
-    while (Math.abs(newTop - btnTop) < containerHeight / 3) {
-        newTop = getRandomNumber(0, containerHeight - btnHeight);
+    if (p.alpha <= 0) {
+      fireworks.splice(i, 1);
     }
+  }
 
-    while (Math.abs(newLeft - btnLeft) < containerWidth / 3) {
-        newLeft = getRandomNumber(0, containerWidth - btnWidth);
-    }
-
-    btnNo.style.top = Math.floor(newTop) + "px";
-    btnNo.style.left = Math.floor(newLeft) + "px";
-});
-function playAudio() {
-    var audio = document.getElementById("myAudio");
-    audio.play();
+  requestAnimationFrame(draw);
 }
-btnYes.addEventListener("click",(e)=>{
-    btnNo.classList.add("hide");
-    image1.classList.add("hide");
-    image2.classList.remove("hide");
-    mydetails.classList.remove("hide");
-    playAudio();
-
-
-})
-
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    const audio = document.querySelector("audio");
-    if (audio) {
-        audio.volume = 0.30; // Adjust volume here
-    }
-});
+draw();
