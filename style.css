@@ -1,14 +1,19 @@
-/* Base styles */
-body {
+/* Global reset */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
   font-family: 'Quicksand', sans-serif;
   background-color: #fff0f5;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  overflow: hidden;
 }
 
 /* Fireworks canvas */
@@ -27,8 +32,8 @@ canvas#fireworks {
   position: relative;
   z-index: 1;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 40px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 30px;
   border-radius: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
