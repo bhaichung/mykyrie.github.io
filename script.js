@@ -1,5 +1,6 @@
 window.onload = () => {
   const yesBtn = document.getElementById("yes-btn");
+  const noBtn = document.getElementById("no-btn");
   const canvas = document.getElementById("fireworks");
   const ctx = canvas.getContext("2d");
 
@@ -54,4 +55,16 @@ window.onload = () => {
   }
 
   draw();
+
+  // 👻 NO button runs away
+  noBtn.addEventListener("mouseover", moveNoButton);
+  noBtn.addEventListener("click", moveNoButton);
+
+  function moveNoButton() {
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+  }
 };
