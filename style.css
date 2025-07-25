@@ -82,3 +82,8 @@ button {
 button:hover {
   background-color: #ff1493;
 }
+
+/* Make NO button movable */
+#no-btn {
+  position: relative;
+}
